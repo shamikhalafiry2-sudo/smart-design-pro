@@ -8,8 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&family=Almarai:wght@300;400;700&family=Changa:wght@300;400;600;700&family=Reem+Kufi:wght@400;600;700&family=El+Messiri:wght@400;600;700&family=Lemonada:wght@400;600;700&family=Marhey:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Fabric.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <!-- ⭐ Fabric.js - رابط رئيسي + احتياطي -->
+    <script src="https://cdn.jsdelivr.net/npm/fabric@5.3.0/dist/fabric.min.js"></script>
+    <script>
+        if (typeof fabric === 'undefined') {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"><\/script>');
+        }
+    </script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- الأنماط -->
@@ -33,20 +38,22 @@
             <div class="logo">مُصمم AI</div>
             <button id="backToStart" class="icon-btn"><i class="fa-solid fa-home"></i></button>
         </div>
-<!-- شريط الأزرار السريعة (أيقونات فقط) -->
-<div class="quick-actions-bar">
-    <button class="action-chip" id="undoBtnTop" title="تراجع"><i class="fa-solid fa-undo"></i></button>
-    <button class="action-chip" id="redoBtnTop" title="إعادة"><i class="fa-solid fa-redo"></i></button>
-    <button class="action-chip" id="deleteBtnTop" title="حذف"><i class="fa-solid fa-trash"></i></button>
-    <span style="width:1px;background:#2a2a40;margin:0 4px;"></span>
-    <button class="action-chip" id="cropBtnTop" title="قص"><i class="fa-solid fa-scissors"></i></button>
-    <button class="action-chip" id="penToolBtnTop" title="قلم"><i class="fa-solid fa-pen-fancy"></i></button>
-    <button class="action-chip" id="ttsBtnTop" title="صوت"><i class="fa-solid fa-volume-high"></i></button>
-      <span style="width:1px;background:#2a2a40;margin:0 4px;"></span>
-    <button class="action-chip" id="zoomInBtnTop" title="تكبير"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
 
-        <button class="action-chip" id="zoomOutBtnTop" title="تصغير"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
-</div>
+        <!-- شريط الأزرار السريعة (أيقونات فقط) -->
+        <div class="quick-actions-bar">
+            <button class="action-chip" id="undoBtnTop" title="تراجع"><i class="fa-solid fa-undo"></i></button>
+            <button class="action-chip" id="redoBtnTop" title="إعادة"><i class="fa-solid fa-redo"></i></button>
+            <button class="action-chip" id="deleteBtnTop" title="حذف"><i class="fa-solid fa-trash"></i></button>
+            <span style="width:1px;background:#2a2a40;margin:0 4px;"></span>
+            <button class="action-chip" id="cropBtnTop" title="قص"><i class="fa-solid fa-scissors"></i></button>
+            <button class="action-chip" id="penToolBtnTop" title="قلم"><i class="fa-solid fa-pen-fancy"></i></button>
+            <button class="action-chip" id="ttsBtnTop" title="صوت"><i class="fa-solid fa-volume-high"></i></button>
+            <button class="action-chip" id="faceEditBtnTop" title="وجه"><i class="fa-solid fa-face-smile"></i></button>
+            <span style="width:1px;background:#2a2a40;margin:0 4px;"></span>
+            <button class="action-chip" id="zoomInBtnTop" title="تكبير"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+            <button class="action-chip" id="zoomOutBtnTop" title="تصغير"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+        </div>
+
         <div class="main-layout">
             <!-- الشريط الجانبي (ينزلق على الجوال) -->
             <aside class="sidebar" id="sidebar">
@@ -71,7 +78,7 @@
                     <input type="file" id="imageUpload" accept="image/*" style="display:none;">
                     <div class="color-picker-group"><label>خلفية:</label><input type="color" id="bgColorPicker" value="#1e1e2f"></div>
                 </div>
-                <div class="panel" id="selectedSettings" style="display:none;"> 
+                <div class="panel" id="selectedSettings" style="display:none;">
                     <h3>⚙️ تأثيرات</h3>
                     <div class="setting-row"><label>لون:</label><input type="color" id="textColorPicker"></div>
                     <div class="setting-row"><label>الخط:</label><select id="fontFamilySelect"></select></div>
@@ -121,4 +128,4 @@
     <script src="templates.js"></script>
     <script src="ui.js"></script>
 </body>
-</html>
+        </html>
