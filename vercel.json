@@ -1,11 +1,6 @@
 {
-  "functions": {
-    "generate.js": {
-      "memory": 512,
-      "maxDuration": 10
-    }
-  },
+  "version": 2,
   "rewrites": [
-    { "source": "/api/generate", "destination": "/generate" }
+    { "source": "/api/generate", "destination": "/api/generate" }
   ]
 }
