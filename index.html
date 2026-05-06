@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>محرر التصميم الذكي AI</title>
+    <!-- الخطوط العربية المتعددة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&family=Almarai:wght@300;400;700&family=Changa:wght@300;400;600;700&family=Reem+Kufi:wght@400;600;700&family=El+Messiri:wght@400;600;700&family=Lemonada:wght@400;600;700&family=Marhey:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Fabric.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- الأنماط -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- شاشة البداية -->
+    <div id="startScreen">
+        <h2>ماذا تريد أن تصمم؟</h2>
+        <textarea id="startPrompt" placeholder="مثال: بوستر لمطعم فاخر..." rows="3"></textarea>
+        <button class="big-btn" id="generateFromPrompt"><i class="fa-solid fa-wand-magic-sparkles"></i> توليد بالذكاء الاصطناعي</button>
+        <button class="big-btn" id="uploadImageBtn"><i class="fa-solid fa-image"></i> اختر صورة للتعديل</button>
+        <input type="file" id="imageUploadStart" accept="image/*" style="display:none;">
+    </div>
+
+    <!-- واجهة المحرر الرئيسية -->
+    <div id="editorContainer" style="display:none;">
+        <!-- الشريط العلوي -->
+        <div class="top-bar">
+            <button id="menuToggle" class="icon-btn"><i class="fa-solid fa-bars"></i></button>
+            <div class="logo">مُصمم AI</div>
+            <button id="backToStart" class="icon-btn"><i class="fa-solid fa-home"></i></button>
+        </div>
+<!-- شريط الأزرار السريعة (أيقونات فقط) -->
+<div class="quick-actions-bar">
+    <button class="action-chip" id="undoBtnTop" title="تراجع"><i class="fa-solid fa-undo"></i></button>
+    <button class="action-chip" id="redoBtnTop" title="إعادة"><i class="fa-solid fa-redo"></i></button>
+    <button class="action-chip" id="deleteBtnTop" title="حذف"><i class="fa-solid fa-trash"></i></button>
+    <span style="width:1px;background:#2a2a40;margin:0 4px;"></span>
+    <button class="action-chip" id="cropBtnTop" title="قص"><i class="fa-solid fa-scissors"></i></button>
+    <button class="action-chip" id="penToolBtnTop" title="قلم"><i class="fa-solid fa-pen-fancy"></i></button>
+    <button class="action-chip" id="ttsBtnTop" title="صوت"><i class="fa-solid fa-volume-high"></i></button>
+      <span style="width:1px;background:#2a2a40;margin:0 4px;"></span>
+    <button class="action-chip" id="zoomInBtnTop" title="تكبير"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+
+        <button class="action-chip" id="zoomOutBtnTop" title="تصغير"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+</div>
+        <div class="main-layout">
+            <!-- الشريط الجانبي (ينزلق على الجوال) -->
+            <aside class="sidebar" id="sidebar">
+                <div class="panel">
+                    <h3>🧠 تصميم بالذكاء الاصطناعي</h3>
+                    <textarea id="aiPrompt" placeholder="وصف التصميم..." rows="2"></textarea>
+                    <button id="generateAIBtn" class="btn-primary">توليد</button>
+                </div>
+                <div class="panel">
+                    <h3>✨ مولد شعارات</h3>
+                    <textarea id="logoPrompt" placeholder="اسم الشركة..." rows="1"></textarea>
+                    <button id="generateLogoBtn" class="btn-primary">توليد شعار</button>
+                </div>
+                <div class="panel">
+                    <h3>📚 القوالب</h3>
+                    <div id="templateGrid" class="template-grid"></div>
+                </div>
+                <div class="panel">
+                    <h3>✏️ أدوات</h3>
+                    <button id="addTextBtn" class="btn-secondary">إضافة نص</button>
+                    <button id="addImageBtn" class="btn-secondary">إضافة صورة</button>
+                    <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+                    <div class="color-picker-group"><label>خلفية:</label><input type="color" id="bgColorPicker" value="#1e1e2f"></div>
+                </div>
+                <div class="panel" id="selectedSettings" style="display:none;">
+                    <h3>⚙️ تأثيرات</h3>
+                    <div class="setting-row"><label>لون:</label><input type="color" id="textColorPicker"></div>
+                    <div class="setting-row"><label>الخط:</label><select id="fontFamilySelect"></select></div>
+                    <div class="setting-row"><label>شفافية:</label><input type="range" id="opacitySlider" min="0.1" max="1" step="0.1"></div>
+                    <div class="setting-row"><label>ظل:</label><button id="toggleShadow" class="btn-sm">تفعيل</button></div>
+                    <div class="setting-row"><label>حدود:</label><input type="range" id="strokeWidth" min="0" max="10"><input type="color" id="strokeColor"></div>
+                    <div class="setting-row"><label>تدوير:</label><input type="range" id="rotationSlider" min="-180" max="180"></div>
+                    <button id="deleteSelectedBtn" class="btn-danger">حذف</button>
+                </div>
+                <div class="panel">
+                    <h3>📑 الطبقات</h3>
+                    <ul id="layersList" class="layers-list"></ul>
+                    <button id="bringForward" class="btn-sm">للأمام</button>
+                    <button id="sendBackward" class="btn-sm">للخلف</button>
+                </div>
+                <div class="panel">
+                    <h3>💾 تحكم</h3>
+                    <button id="undoBtn" class="btn-sm"><i class="fa-solid fa-undo"></i></button>
+                    <button id="redoBtn" class="btn-sm"><i class="fa-solid fa-redo"></i></button>
+                    <button id="exportBtn" class="btn-primary">تصدير PNG</button>
+                </div>
+            </aside>
+
+            <!-- منطقة الكانفاس -->
+            <main class="canvas-area">
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <canvas id="designCanvas"></canvas>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- النوافذ المنبثقة -->
+    <div class="modal" id="penModal"><div class="modal-content"><h3>أداة القلم</h3><p>انقر على الكانفاس لإضافة نقاط.</p><button id="finishPenBtn">إنهاء المسار</button><button id="cancelPenBtn">إلغاء</button></div></div>
+    <div class="modal" id="faceModal"><div class="modal-content"><h3>تعديل الوجه</h3><label>الأنف - الجسر<input type="range" id="noseBridge" min="-10" max="10" value="0"></label><label>رفع الأنف<input type="range" id="noseUp" min="-10" max="10" value="0"></label><label>تصغير الأنف<input type="range" id="noseSize" min="-10" max="10" value="0"></label><label>الفم - حجم<input type="range" id="mouthSize" min="-10" max="10" value="0"></label><label>العين - حجم<input type="range" id="eyeSize" min="-10" max="10" value="0"></label><label>مسافة العينين<input type="range" id="eyeDist" min="-10" max="10" value="0"></label><button id="applyFaceBtn">تطبيق (محاكاة)</button></div></div>
+    <div class="modal" id="ttsModal"><div class="modal-content"><h3>تحويل النص إلى كلام</h3><textarea id="ttsText" rows="3" placeholder="النص..."></textarea><label>الصوت:<select id="voiceSelect"></select></label><button id="speakBtn">🔊 استمع</button></div></div>
+
+    <!-- تحميل الملفات بالترتيب -->
+    <script src="canvas-core.js"></script>
+    <script src="layers.js"></script>
+    <script src="effects.js"></script>
+    <script src="alignment.js"></script>
+    <script src="pen-tool.js"></script>
+    <script src="ai.js"></script>
+    <script src="face-edit.js"></script>
+    <script src="text-to-speech.js"></script>
+    <script src="templates.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
