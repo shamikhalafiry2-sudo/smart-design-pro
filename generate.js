@@ -1,4 +1,6 @@
-// generate.js - وسيط OpenAI API
+// هذا الملف موجود في الجذر مباشرة
+// Vercel سيتعرف عليه كـ Serverless Function تلقائياً
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -23,11 +25,12 @@ export default async function handler(req, res) {
         messages: [
           {
             role: 'system',
-            content: `أنت مساعد تصميم. أعد JSON لتصميم ${type === 'logo' ? 'شعار' : 'بوستر'}. الهيكل: { "title": "عنوان", "subtitle": "نص فرعي", "bgColor": "#hex", "titleColor": "#hex", "subtitleColor": "#hex", "fontTitle": "Cairo", "fontSubtitle": "Tajawal", "elements": [ { "type": "text", "content": "نص", "x": 0.5, "y": 0.3, "fontSize": 48 } ] }`
+            content: `أنت مساعد تصميم. أعد JSON لتصميم ${type === 'logo' ? 'شعار' : 'بوستر'}. الهيكل: { "title": "عنوان رئيسي", "subtitle": "نص فرعي", "bgColor": "#hex", "titleColor": "#hex", "subtitleColor": "#hex", "fontTitle": "Cairo", "fontSubtitle": "Tajawal", "elements": [ { "type": "text", "content": "نص", "x": 0.5, "y": 0.3, "fontSize": 48 } ] }`
           },
           { role: 'user', content: `صمم: ${prompt}` }
         ],
-        temperature: 0.8, max_tokens: 500
+        temperature: 0.8,
+        max_tokens: 500
       })
     });
 
